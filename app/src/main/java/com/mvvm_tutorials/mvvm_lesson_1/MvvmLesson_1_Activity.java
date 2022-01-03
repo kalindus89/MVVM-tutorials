@@ -47,6 +47,24 @@ public class MvvmLesson_1_Activity extends AppCompatActivity {
                 placesAdapter.notifyDataSetChanged();
             }
         });
+        mvvmActivity_viewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    showProgressBar();
+                }else {
+                    hideProgressBar();
+                    recycler_view.smoothScrollToPosition(mvvmActivity_viewModel.getPlaces().getValue().size()-1);
+                }
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mvvmActivity_viewModel.addNewDataToList(new PlacesModel("Pakistan","https://i.redd.it/obx4zydshg601.jpg"));
+            }
+        });
 
         initRecyclerView();
     }
