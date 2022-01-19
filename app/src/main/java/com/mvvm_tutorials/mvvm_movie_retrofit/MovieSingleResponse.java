@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class MovieSingleResponse {
 
 
-    @SerializedName("results")
+
     private MovieModel results;
 
     public MovieModel getResults() {
