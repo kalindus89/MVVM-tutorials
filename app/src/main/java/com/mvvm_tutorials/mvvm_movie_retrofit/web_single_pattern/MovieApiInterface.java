@@ -1,4 +1,6 @@
-package com.mvvm_tutorials.mvvm_movie_retrofit;
+package com.mvvm_tutorials.mvvm_movie_retrofit.web_single_pattern;
+
+import com.mvvm_tutorials.mvvm_movie_retrofit.model.MovieModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,7 +1,8 @@
-package com.mvvm_tutorials.mvvm_movie_retrofit;
+package com.mvvm_tutorials.mvvm_movie_retrofit.web_single_pattern;
 
 
 import com.google.gson.annotations.SerializedName;
+import com.mvvm_tutorials.mvvm_movie_retrofit.model.MovieModel;
 
 import java.util.List;
 

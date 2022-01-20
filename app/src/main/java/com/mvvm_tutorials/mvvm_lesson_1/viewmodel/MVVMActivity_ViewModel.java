@@ -23,9 +23,12 @@ public class MVVMActivity_ViewModel extends ViewModel {
     private MutableLiveData<List<PlacesModel>> listPlaceModel;
     private MutableLiveData<Boolean> mIsUpdatingList = new MutableLiveData<>(); // eg: show progress bar until data is retrieve
 
+    //getters of mutableLivedata.
     public LiveData<List<PlacesModel>> getPlaces(){
         return listPlaceModel;
     }
+
+    //getters of mutableLivedata.
     public LiveData<Boolean> getIsUpdating(){
         return mIsUpdatingList;
     }

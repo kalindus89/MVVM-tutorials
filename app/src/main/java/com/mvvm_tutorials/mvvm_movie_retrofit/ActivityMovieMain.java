@@ -1,12 +1,21 @@
 package com.mvvm_tutorials.mvvm_movie_retrofit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.mvvm_tutorials.R;
+import com.mvvm_tutorials.mvvm_lesson_1.viewmodel.MVVMActivity_ViewModel;
+import com.mvvm_tutorials.mvvm_movie_retrofit.model.MovieModel;
+import com.mvvm_tutorials.mvvm_movie_retrofit.view_model.MovieListViewModel;
+import com.mvvm_tutorials.mvvm_movie_retrofit.web_single_pattern.Credentials;
+import com.mvvm_tutorials.mvvm_movie_retrofit.web_single_pattern.MovieApiInterface;
+import com.mvvm_tutorials.mvvm_movie_retrofit.web_single_pattern.MoviesSearchResponse;
+import com.mvvm_tutorials.mvvm_movie_retrofit.web_single_pattern.ServiceClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +25,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ActivityMovieMain extends AppCompatActivity {
+
     Button searchByName,searchId;
+    private MovieListViewModel movieListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_main);
 
-        searchByName=findViewById(R.id.searchByName);
+
+        movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
+
+        observeAnyDataChange();
+
+        /*searchByName=findViewById(R.id.searchByName);
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,8 +53,19 @@ public class ActivityMovieMain extends AppCompatActivity {
             public void onClick(View view) {
                 getASingleMovieDetails();
             }
-        });
+        });*/
 
+    }
+
+    //Observing any data change
+    private void observeAnyDataChange(){
+
+        movieListViewModel.getMovies().observe(this, new Observer<List<MovieModel>>() {
+            @Override
+            public void onChanged(List<MovieModel> movieModels) {
+                //trigger/listening any data changes
+            }
+        });
     }
 
     private void getRetrofitResponse() {

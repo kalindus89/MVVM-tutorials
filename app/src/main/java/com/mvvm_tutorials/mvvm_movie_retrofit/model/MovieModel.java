@@ -1,4 +1,4 @@
-package com.mvvm_tutorials.mvvm_movie_retrofit;
+package com.mvvm_tutorials.mvvm_movie_retrofit.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

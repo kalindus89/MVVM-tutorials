@@ -1,4 +1,4 @@
-package com.mvvm_tutorials.mvvm_movie_retrofit;
+package com.mvvm_tutorials.mvvm_movie_retrofit.web_single_pattern;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
