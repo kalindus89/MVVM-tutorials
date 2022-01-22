@@ -23,7 +23,7 @@ public class MovieRepository {
             instance = new MovieRepository();
         }
         return instance;
-    };
+    }
 
 
     //pretend to get data from webservice or database
