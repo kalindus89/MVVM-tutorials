@@ -26,6 +26,10 @@ import retrofit2.Response;
 
 public class ActivityMovieMain extends AppCompatActivity {
 
+
+    /* We have added the network security config that makesure sub domain URls are working
+     (filename xml folder: network-security-config) and manifest file*/
+
     Button searchByName,searchId;
     private MovieListViewModel movieListViewModel;
 
@@ -44,18 +48,19 @@ public class ActivityMovieMain extends AppCompatActivity {
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // getRetrofitResponse();
                 searchMovieApi("Fast",1);
+                // getRetrofitResponse();
             }
         });
 
-        /*searchId=findViewById(R.id.searchId);
+        searchId=findViewById(R.id.searchId);
         searchId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getASingleMovieDetails();
+                searchMovieApi("Fast",2);
+                // getASingleMovieDetails();
             }
-        });*/
+        });
 
     }
 
