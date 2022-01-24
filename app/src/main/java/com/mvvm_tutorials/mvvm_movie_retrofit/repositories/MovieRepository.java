@@ -25,10 +25,16 @@ public class MovieRepository {
         return instance;
     }
 
+    //calling the method to call api
+    public void searchMovieApi(String searchQuery, int pageNUmber){
+        movieApiClient.searchMovieApi(searchQuery,pageNUmber);
+    }
 
     //pretend to get data from webservice or database
     public LiveData<List<MovieModel>> getMovies(){
 
         return movieApiClient.getMovies();
     }
+
+
 }

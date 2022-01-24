@@ -20,6 +20,12 @@ public class MovieListViewModel extends ViewModel {
     }
 
 
+
+    //calling the method to call api
+    public void searchMovieApi(String searchQuery, int pageNUmber){
+        mRepository.searchMovieApi(searchQuery,pageNUmber);
+    }
+
     //getters of mutableLivedata.
     public LiveData<List<MovieModel>> getMovies(){
 

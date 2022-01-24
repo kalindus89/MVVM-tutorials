@@ -37,17 +37,19 @@ public class ActivityMovieMain extends AppCompatActivity {
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
+        //calling the observers
         observeAnyDataChange();
 
-        /*searchByName=findViewById(R.id.searchByName);
+        searchByName=findViewById(R.id.searchByName);
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRetrofitResponse();
+               // getRetrofitResponse();
+                searchMovieApi("Fast",1);
             }
         });
 
-        searchId=findViewById(R.id.searchId);
+        /*searchId=findViewById(R.id.searchId);
         searchId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,14 +66,29 @@ public class ActivityMovieMain extends AppCompatActivity {
             @Override
             public void onChanged(List<MovieModel> movieModels) {
                 //trigger/listening any data changes
+
+                if(movieModels !=null){
+                    for(MovieModel movieModel : movieModels){
+                        System.out.println("aaaaaaaaaaa "+movieModel.getRelease_date()+" "+movieModel.getTitle());
+                    }
+                }
             }
         });
     }
 
+    //calling the method to call api
+    public void searchMovieApi(String searchQuery, int pageNUmber){
+        movieListViewModel.searchMovieApi(searchQuery,pageNUmber);
+    }
+
+
     private void getRetrofitResponse() {
 
         MovieApiInterface movieApiInterface = ServiceClass.getMovieApiInterface();
-        movieApiInterface.getSearchMovies(Credentials.API_KEY,"Jack Reacher",1).enqueue(new Callback<MoviesSearchResponse>() {
+        //two ways. with or without response call.. check next method without it
+        Call<MoviesSearchResponse> responseCall=movieApiInterface.getSearchMovies(Credentials.API_KEY,"Jack Reacher",1);
+
+        responseCall.enqueue(new Callback<MoviesSearchResponse>() {
             @Override
             public void onResponse(Call<MoviesSearchResponse> call, Response<MoviesSearchResponse> response) {
 
