@@ -23,9 +23,10 @@ public class MovieModel implements Parcelable {
     String overview;
     String original_language;
     String backdrop_path;
+    int runtime;
 
 
-    public MovieModel(String title, String poster_path, String release_date, int id, float vote_average, String overview, String original_language, String backdrop_path) {
+    public MovieModel(String title, String poster_path, String release_date, int id, float vote_average, String overview, String original_language, String backdrop_path, int runtime) {
         this.title = title;
         this.poster_path = poster_path;
         this.release_date = release_date;
@@ -34,6 +35,7 @@ public class MovieModel implements Parcelable {
         this.overview = overview;
         this.original_language = original_language;
         this.backdrop_path = backdrop_path;
+        this.runtime = runtime;
     }
 
     protected MovieModel(Parcel in) {
@@ -44,6 +46,7 @@ public class MovieModel implements Parcelable {
         vote_average = in.readFloat();
         overview = in.readString();
         original_language = in.readString();
+        runtime = in.readInt();
     }
 
     public String getTitle() {
@@ -78,7 +81,11 @@ public class MovieModel implements Parcelable {
         return backdrop_path;
     }
 
-//Parcelable helps to pass datato activity fast.
+    public int getRuntime() {
+        return runtime;
+    }
+
+    //Parcelable helps to pass datato activity fast.
     //intent.putExtra("MovieModel", new MovieModel("1","",""));
 
     //Bundle data = getIntent().getExtras();
@@ -99,6 +106,7 @@ public class MovieModel implements Parcelable {
         parcel.writeString(overview);
         parcel.writeString(original_language);
         parcel.writeString(backdrop_path);
+        parcel.writeInt(runtime);
     }
 
 

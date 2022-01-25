@@ -41,7 +41,7 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/movie_category"
+                    android:id="@+id/movie_release_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="60"
@@ -50,12 +50,12 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/movie_duration"
+                    android:id="@+id/movie_runtime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
-                    android:layout_weight="10"
-                    android:gravity="start"
+                    android:layout_weight="40"
+                    android:gravity="end"
                     android:text="Duration"
                     android:textSize="14sp" />
 
