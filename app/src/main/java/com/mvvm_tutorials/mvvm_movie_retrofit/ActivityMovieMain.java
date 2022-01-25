@@ -3,12 +3,15 @@ package com.mvvm_tutorials.mvvm_movie_retrofit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.mvvm_tutorials.R;
+import com.mvvm_tutorials.mvvm_lesson_1.adapter.PlacesAdapter;
 import com.mvvm_tutorials.mvvm_lesson_1.viewmodel.MVVMActivity_ViewModel;
 import com.mvvm_tutorials.mvvm_movie_retrofit.model.MovieModel;
 import com.mvvm_tutorials.mvvm_movie_retrofit.view_model.MovieListViewModel;
@@ -24,14 +27,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ActivityMovieMain extends AppCompatActivity {
+public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnClickListener{
 
 
     /* We have added the network security config that makesure sub domain URls are working
      (filename xml folder: network-security-config) and manifest file*/
 
-    Button searchByName,searchId;
+    RecyclerView recycler_view;
     private MovieListViewModel movieListViewModel;
+    private MovieRecyclerAdapter movieRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,16 @@ public class ActivityMovieMain extends AppCompatActivity {
 
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
+       
+        recycler_view=findViewById(R.id.recycler_view);
 
+        configureRecyclerView();
+        
         //calling the observers
         observeAnyDataChange();
+        searchMovieApi("Fast",1);
 
-        searchByName=findViewById(R.id.searchByName);
+      /*  searchByName=findViewById(R.id.searchByName);
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +69,7 @@ public class ActivityMovieMain extends AppCompatActivity {
                 searchMovieApi("Fast",2);
                 // getASingleMovieDetails();
             }
-        });
+        });*/
 
     }
 
@@ -73,9 +82,10 @@ public class ActivityMovieMain extends AppCompatActivity {
                 //trigger/listening any data changes
 
                 if(movieModels !=null){
-                    for(MovieModel movieModel : movieModels){
+                    /*for(MovieModel movieModel : movieModels){
                         System.out.println("aaaaaaaaaaa "+movieModel.getRelease_date()+" "+movieModel.getTitle());
-                    }
+                    }*/
+                    movieRecyclerAdapter.setmMovies(movieModels);
                 }
             }
         });
@@ -86,6 +96,25 @@ public class ActivityMovieMain extends AppCompatActivity {
         movieListViewModel.searchMovieApi(searchQuery,pageNUmber);
     }
 
+    private void configureRecyclerView(){
+
+        movieRecyclerAdapter= new MovieRecyclerAdapter(this); //mvvmActivity_viewModel.getPlaces().getValue() return the list
+// passing data inside the observeAnyDataChange() method
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view.setAdapter(movieRecyclerAdapter);
+
+    }
+
+    //get listiew item click listeners
+    @Override
+    public void onMovieClick(int position) {
+
+    }
+
+    @Override
+    public void onCategoryClick(String category) {
+
+    }
 
     private void getRetrofitResponse() {
 
@@ -148,4 +177,7 @@ public class ActivityMovieMain extends AppCompatActivity {
         });
 
     }
+
+
+
 }

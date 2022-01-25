@@ -7,22 +7,28 @@
     android:orientation="vertical"
     tools:context=".mvvm_movie_retrofit.ActivityMovieMain">
 
-    <Button
-        android:id="@+id/searchByName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search By Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <Button
+            android:id="@+id/searchByName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/searchId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search By Id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="399dp" />
+        <Button
+            android:id="@+id/searchId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search By Id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="399dp" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>
