@@ -46,17 +46,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="60"
                     android:gravity="start"
-                    android:text="Movie Title"
+                    android:text="Movie release date"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/movie_runtime"
+                    android:id="@+id/movie_id"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:layout_weight="40"
                     android:gravity="end"
-                    android:text="Duration"
+                    android:text="Movie Id"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -67,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:clickable="false"
                 android:numStars="5" />
 
         </LinearLayout>

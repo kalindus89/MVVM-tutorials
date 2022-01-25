@@ -3,6 +3,8 @@ package com.mvvm_tutorials.mvvm_movie_retrofit.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 
 //Model class for movies. keys of Api
 //https://api.themoviedb.org/3/movie/popular?api_key=459351d1311a26f26c93016a0d788db7

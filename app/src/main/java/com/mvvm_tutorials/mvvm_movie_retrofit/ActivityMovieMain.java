@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.mvvm_tutorials.R;
 import com.mvvm_tutorials.mvvm_lesson_1.adapter.PlacesAdapter;
@@ -108,6 +109,7 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
     //get listiew item click listeners
     @Override
     public void onMovieClick(int position) {
+        Toast.makeText(this,"Click item position: "+String.valueOf(position+1),Toast.LENGTH_SHORT).show();
 
     }
 

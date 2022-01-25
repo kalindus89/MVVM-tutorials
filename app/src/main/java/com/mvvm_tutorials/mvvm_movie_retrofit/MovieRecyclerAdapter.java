@@ -45,9 +45,10 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     public void onBindViewHolder(@NonNull MovieRecyclerAdapter.ViewHolder holder, int position) {
 
         holder.movie_title.setText(mMovies.get(position).getTitle());
-        holder.movie_runtime.setText(String.valueOf(mMovies.get(position).getRuntime()));
+        holder.movie_id.setText(String.valueOf(mMovies.get(position).getId()));
         holder.movie_release_date.setText(mMovies.get(position).getRelease_date());
         holder.rating_bar.setRating((mMovies.get(position).getVote_average()) / 2);
+        holder.rating_bar.setIsIndicator(true);
 
         Glide.with(holder.itemView.getContext())
                 .load("https://image.tmdb.org/t/p/w500"+mMovies.get(position).getPoster_path())
@@ -66,7 +67,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView movie_title, movie_runtime, movie_release_date;
+        TextView movie_title, movie_id, movie_release_date;
         ImageView movie_img;
         RatingBar rating_bar;
 
@@ -77,11 +78,13 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
             super(itemView);
 
             movie_title = itemView.findViewById(R.id.movie_title);
-            movie_runtime = itemView.findViewById(R.id.movie_runtime);
+            movie_id = itemView.findViewById(R.id.movie_id);
             movie_release_date = itemView.findViewById(R.id.movie_release_date);
             movie_img = itemView.findViewById(R.id.movie_img);
             rating_bar = itemView.findViewById(R.id.rating_bar);
+
             this.onMovieItemClickListener = onMovieItemClickListener;
+
             itemView.setOnClickListener(this);
         }
 
