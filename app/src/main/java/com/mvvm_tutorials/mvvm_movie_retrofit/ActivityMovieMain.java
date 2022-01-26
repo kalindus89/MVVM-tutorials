@@ -1,6 +1,8 @@
 package com.mvvm_tutorials.mvvm_movie_retrofit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +37,8 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
      (filename xml folder: network-security-config) and manifest file*/
 
     RecyclerView recycler_view;
+    Toolbar toolBar;
+    SearchView search_view;
     private MovieListViewModel movieListViewModel;
     private MovieRecyclerAdapter movieRecyclerAdapter;
 
@@ -47,12 +51,16 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
        
         recycler_view=findViewById(R.id.recycler_view);
+        search_view=findViewById(R.id.search_view);
+
+        toolBar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolBar);
 
         configureRecyclerView();
+        setupSearchView();
         
         //calling the observers
         observeAnyDataChange();
-        searchMovieApi("Fast",1);
 
       /*  searchByName=findViewById(R.id.searchByName);
         searchByName.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +100,23 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
         });
     }
 
-    //calling the method to call api
-    public void searchMovieApi(String searchQuery, int pageNUmber){
-        movieListViewModel.searchMovieApi(searchQuery,pageNUmber);
+
+    private void setupSearchView() {
+
+        search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                //calling the method to call api
+                movieListViewModel.searchMovieApi(query,1);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void configureRecyclerView(){
@@ -113,10 +135,6 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
 
     }
 
-    @Override
-    public void onCategoryClick(String category) {
-
-    }
 
     private void getRetrofitResponse() {
 
