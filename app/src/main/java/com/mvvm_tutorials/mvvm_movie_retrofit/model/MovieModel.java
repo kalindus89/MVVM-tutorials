@@ -48,6 +48,7 @@ public class MovieModel implements Parcelable {
         vote_average = in.readFloat();
         overview = in.readString();
         original_language = in.readString();
+        backdrop_path = in.readString();
         runtime = in.readInt();
     }
 

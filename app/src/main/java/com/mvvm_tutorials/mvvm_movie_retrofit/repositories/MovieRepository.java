@@ -28,6 +28,10 @@ public class MovieRepository {
         return instance;
     }
 
+
+    //------------------------------for search api calling-----------------------------------------
+    //--------------------------------------------------------------------------------------------
+
     //calling the method to call api search movies
     public void searchMovieApi(String searchQuery, int pageNumber){
 
@@ -49,5 +53,26 @@ public class MovieRepository {
         return movieApiClient.getMovies();
     }
 
+
+    //------------------------------for popular api calling-----------------------------------------
+    //--------------------------------------------------------------------------------------------
+
+    //calling the method to call api popular movies
+    public void popularMovieApi(int pageNumber){
+        this.pageNumber=pageNumber;
+        movieApiClient.popularMovieApi(pageNumber);
+    }
+
+    //calling the method to call api popular movies in next pages
+    public void popularMovieInNextPageApi(){
+        pageNumber=(pageNumber+1);
+        movieApiClient.popularMovieApi(pageNumber);
+    }
+
+    //pretend to get data from webservice or database
+    public LiveData<List<MovieModel>> getPopularMovies(){
+
+        return movieApiClient.getPopularMovies();
+    }
 
 }

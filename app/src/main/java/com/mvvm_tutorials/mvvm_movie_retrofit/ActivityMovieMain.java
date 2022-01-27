@@ -43,6 +43,7 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
     SearchView search_view;
     private MovieListViewModel movieListViewModel;
     private MovieRecyclerAdapter movieRecyclerAdapter;
+    boolean isPopular = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,30 +63,34 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
         setupSearchView();
 
         //calling the observers
-        observeAnyDataChange();
+        observeAnyDataChangeForSearch();
+        observeAnyDataChangeForPopular();
 
-      /*  searchByName=findViewById(R.id.searchByName);
-        searchByName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchMovieApi("Fast",1);
-                // getRetrofitResponse();
-            }
-        });
+        movieListViewModel.popularMovieApi(1); // initialize the app with popular movies
 
-        searchId=findViewById(R.id.searchId);
-        searchId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchMovieApi("Fast",2);
-                // getASingleMovieDetails();
-            }
-        });*/
 
     }
 
     //Observing any data change
-    private void observeAnyDataChange() {
+    private void observeAnyDataChangeForPopular() {
+
+        movieListViewModel.getPopularMovies().observe(this, new Observer<List<MovieModel>>() {
+            @Override
+            public void onChanged(List<MovieModel> movieModels) {
+                //trigger/listening any data changes
+
+                if (movieModels != null) {
+                    /*for(MovieModel movieModel : movieModels){
+                        System.out.println("aaaaaaaaaaa "+movieModel.getRelease_date()+" "+movieModel.getTitle());
+                    }*/
+                    movieRecyclerAdapter.setmMovies(movieModels);
+                }
+            }
+        });
+    }
+
+    //Observing any data change
+    private void observeAnyDataChangeForSearch() {
 
         movieListViewModel.getMovies().observe(this, new Observer<List<MovieModel>>() {
             @Override
@@ -109,6 +114,7 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
             @Override
             public boolean onQueryTextSubmit(String query) {
 
+                isPopular=false;
                 //calling the method to call api
                 movieListViewModel.searchMovieApi(query, 1); // if pageNumber is 1 new list. else adding to current list. check searchMovieApi in MovieApiClient class
                 return false;
@@ -137,8 +143,13 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
 
                 if (!recyclerView.canScrollVertically(1)) {
 
-                    //calling the method to call api search movies
-                    movieListViewModel.searchMovieInNextPageApi();
+
+                    if(isPopular==false) {
+                        //calling the method to call api search movies
+                        movieListViewModel.searchMovieInNextPageApi();
+                    }else{
+                        movieListViewModel.popularMovieInNextPageApi();
+                    }
                 }
 
 
@@ -158,8 +169,9 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
 
     }
 
+// normal wall of calling an Api using retrofit
 
-    private void getRetrofitResponse() {
+  /*  private void getRetrofitResponse() {
 
         MovieApiInterface movieApiInterface = ServiceClass.getMovieApiInterface();
         //two ways. with or without response call.. check next method without it
@@ -218,7 +230,7 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
             }
         });
 
-    }
+    }*/
 
 
 }

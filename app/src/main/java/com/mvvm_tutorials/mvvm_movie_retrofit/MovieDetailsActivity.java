@@ -50,7 +50,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             movie_Title.setText(movieModel.getTitle());
             movie_overView.setText(movieModel.getOverview());
 
-            Glide.with(this).load("https://image.tmdb.org/t/p/w500"+movieModel.getPoster_path()).placeholder(R.drawable.loading_image).into(imageview_details);
+            Glide.with(this).load("https://image.tmdb.org/t/p/w500"+movieModel.getBackdrop_path()).placeholder(R.drawable.loading_image).into(imageview_details);
 
             rating_bar.setRating((movieModel.getVote_average()) / 2);
             rating_bar.setIsIndicator(true);

@@ -22,4 +22,11 @@ public interface MovieApiInterface {
             @Path("movie_id") int movie_id,
             @Query("api_key") String api_key
     );
+
+    @GET("movie/popular")
+    Call<MoviesPopularResponse> getPopularMovies(
+            @Query("api_key") String api_key,
+            @Query("page") int pageNumber
+    );
+
 }
