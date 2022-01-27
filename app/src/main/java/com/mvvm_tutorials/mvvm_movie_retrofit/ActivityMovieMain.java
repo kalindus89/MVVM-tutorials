@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -150,6 +151,10 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
     @Override
     public void onMovieClick(int position) {
         Toast.makeText(this, "Click item position: " + String.valueOf(position + 1), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,MovieDetailsActivity.class);
+        intent.putExtra("movie",movieRecyclerAdapter.getSelectedMovie(position));
+        startActivity(intent);
+
 
     }
 
