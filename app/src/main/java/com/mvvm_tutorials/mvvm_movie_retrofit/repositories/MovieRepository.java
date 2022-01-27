@@ -14,6 +14,9 @@ public class MovieRepository {
 
     private MovieApiClient movieApiClient;
 
+    private String searchQuery;
+    private int pageNumber;
+
     public MovieRepository() {
         movieApiClient=  MovieApiClient.getInstance();
     }
@@ -25,9 +28,19 @@ public class MovieRepository {
         return instance;
     }
 
-    //calling the method to call api
-    public void searchMovieApi(String searchQuery, int pageNUmber){
-        movieApiClient.searchMovieApi(searchQuery,pageNUmber);
+    //calling the method to call api search movies
+    public void searchMovieApi(String searchQuery, int pageNumber){
+
+        this.searchQuery=searchQuery;
+        this.pageNumber=pageNumber;
+
+        movieApiClient.searchMovieApi(searchQuery,pageNumber);
+    }
+
+    //calling the method to call api search movies in next pages
+    public void searchMovieInNextPageApi(){
+        pageNumber=(pageNumber+1);
+        movieApiClient.searchMovieApi(searchQuery,pageNumber);
     }
 
     //pretend to get data from webservice or database

@@ -1,5 +1,6 @@
 package com.mvvm_tutorials.mvvm_movie_retrofit;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -30,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnClickListener{
+public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnClickListener {
 
 
     /* We have added the network security config that makesure sub domain URls are working
@@ -49,16 +50,16 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
 
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
-       
-        recycler_view=findViewById(R.id.recycler_view);
-        search_view=findViewById(R.id.search_view);
+
+        recycler_view = findViewById(R.id.recycler_view);
+        search_view = findViewById(R.id.search_view);
 
         toolBar = findViewById(R.id.toolBar);
         setSupportActionBar(toolBar);
 
         configureRecyclerView();
         setupSearchView();
-        
+
         //calling the observers
         observeAnyDataChange();
 
@@ -83,14 +84,14 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
     }
 
     //Observing any data change
-    private void observeAnyDataChange(){
+    private void observeAnyDataChange() {
 
         movieListViewModel.getMovies().observe(this, new Observer<List<MovieModel>>() {
             @Override
             public void onChanged(List<MovieModel> movieModels) {
                 //trigger/listening any data changes
 
-                if(movieModels !=null){
+                if (movieModels != null) {
                     /*for(MovieModel movieModel : movieModels){
                         System.out.println("aaaaaaaaaaa "+movieModel.getRelease_date()+" "+movieModel.getTitle());
                     }*/
@@ -108,7 +109,7 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
             public boolean onQueryTextSubmit(String query) {
 
                 //calling the method to call api
-                movieListViewModel.searchMovieApi(query,1);
+                movieListViewModel.searchMovieApi(query, 1); // if pageNumber is 1 new list. else adding to current list. check searchMovieApi in MovieApiClient class
                 return false;
             }
 
@@ -119,19 +120,36 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
         });
     }
 
-    private void configureRecyclerView(){
+    private void configureRecyclerView() {
 
-        movieRecyclerAdapter= new MovieRecyclerAdapter(this); //mvvmActivity_viewModel.getPlaces().getValue() return the list
+        movieRecyclerAdapter = new MovieRecyclerAdapter(this); //mvvmActivity_viewModel.getPlaces().getValue() return the list
 // passing data inside the observeAnyDataChange() method
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
         recycler_view.setAdapter(movieRecyclerAdapter);
+
+
+        //loading next page of Api response while scrolling
+        recycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+
+                    //calling the method to call api search movies
+                    movieListViewModel.searchMovieInNextPageApi();
+                }
+
+
+            }
+        });
 
     }
 
     //get listiew item click listeners
     @Override
     public void onMovieClick(int position) {
-        Toast.makeText(this,"Click item position: "+String.valueOf(position+1),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Click item position: " + String.valueOf(position + 1), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -140,22 +158,22 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
 
         MovieApiInterface movieApiInterface = ServiceClass.getMovieApiInterface();
         //two ways. with or without response call.. check next method without it
-        Call<MoviesSearchResponse> responseCall=movieApiInterface.getSearchMovies(Credentials.API_KEY,"Jack Reacher",1);
+        Call<MoviesSearchResponse> responseCall = movieApiInterface.getSearchMovies(Credentials.API_KEY, "Jack Reacher", 1);
 
         responseCall.enqueue(new Callback<MoviesSearchResponse>() {
             @Override
             public void onResponse(Call<MoviesSearchResponse> call, Response<MoviesSearchResponse> response) {
 
-                if(response.code() == 200){
+                if (response.code() == 200) {
 
                     List<MovieModel> movieModelList = new ArrayList<>(response.body().getResults());
-                    int i=0;
-                    for(MovieModel movieModel : movieModelList){
+                    int i = 0;
+                    for (MovieModel movieModel : movieModelList) {
                         i++;
-                        System.out.println("aaaaaa  "+i+ " "+movieModel.getTitle()+" "+movieModel.getRelease_date());
+                        System.out.println("aaaaaa  " + i + " " + movieModel.getTitle() + " " + movieModel.getRelease_date());
                     }
 
-                }else{
+                } else {
                     System.out.println("aaaaaa  error");
 
                 }
@@ -164,27 +182,26 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
 
             @Override
             public void onFailure(Call<MoviesSearchResponse> call, Throwable t) {
-                System.out.println("aaaaaa "+t.getMessage());
+                System.out.println("aaaaaa " + t.getMessage());
 
             }
         });
 
 
-
     }
 
-    private void getASingleMovieDetails(){
+    private void getASingleMovieDetails() {
 
         MovieApiInterface movieApiInterface = ServiceClass.getMovieApiInterface();
-        movieApiInterface.getMovieFromId(500,Credentials.API_KEY).enqueue(new Callback<MovieModel>() {
+        movieApiInterface.getMovieFromId(500, Credentials.API_KEY).enqueue(new Callback<MovieModel>() {
             @Override
             public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
-                if(response.code() == 200){
+                if (response.code() == 200) {
 
                     MovieModel movieModel = response.body();
-                    System.out.println("aaaaaa  "+movieModel.getTitle()+" "+movieModel.getRelease_date());
+                    System.out.println("aaaaaa  " + movieModel.getTitle() + " " + movieModel.getRelease_date());
 
-                }else{
+                } else {
                     System.out.println("aaaaaa  error");
 
                 }
@@ -192,12 +209,11 @@ public class ActivityMovieMain extends AppCompatActivity implements MovieItemOnC
 
             @Override
             public void onFailure(Call<MovieModel> call, Throwable t) {
-                System.out.println("aaaaaa "+t.getMessage());
+                System.out.println("aaaaaa " + t.getMessage());
             }
         });
 
     }
-
 
 
 }
